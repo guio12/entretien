@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{%  block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/inscription.css') }}">
+{%  endblock stylesheets %}
+
+{% block content %}{% endblock content %}
+
+{% block body %}
+
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+<section class="global">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <h2 class="text-center">Formulaire d'inscription</h2>
+                        <div class="col-lg-12 text-center">
+                            <div class="form-group input-lg col-lg-12">
+                                <div class="row">
+                                {{ form_label(form.email) }}
+                                </div>
+                                <div class="row">
+                                    <div class="row erreurs text-center">
+                                {{ form_errors(form.email) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                {{ form_widget(form.email) }}
+                                </div>
+                            </div>
+                            <div class="form-group input-lg col-lg-12">
+                                <div class="row">
+                                    {{ form_label(form.username) }}
+                                </div>
+                                <div class="row erreurs text-center">
+                                    {{ form_errors(form.username) }}
+                                </div>
+                                <div class="row">
+                                    {{ form_widget(form.username) }}
+                                </div>
+                            </div>
+                            <div class="form-group input-lg col-lg-12">
+                                <div class="row">
+                                    {{ form_label(form.plainPassword.first) }}
+                                </div>
+                                <div class="row erreurs text-center">
+                                    {{ form_errors(form.plainPassword.first) }}
+                                </div>
+                                <div class="row">
+                                    {{ form_widget(form.plainPassword.first) }}
+                                </div>
+                            </div>
+                            <div class="form-group input-lg col-lg-12">
+                                <div class="row">
+                                    {{ form_label(form.plainPassword.second) }}
+                                </div>
+                                <div class="row erreurs text-center">
+                                    {{ form_errors(form.plainPassword.second) }}
+                                </div>
+                                <div class="row">
+                                    {{ form_widget(form.plainPassword.second) }}
+                                </div>
+                            </div>
+                            <div class="form-group envoyer input-lg col-lg-12">
+                                 <button class="btn btn-lg btn-style" type="submit" value="">Envoyer</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+    {{ form_end(form) }}
+
+{% endblock body %}
