@@ -55,7 +55,57 @@
 
 
 
-{% block body %}{% endblock body %}
+{% block body %}
+    <h2 class="text-center">Actualités</h2>
+    {% for article in articles %}
+        <div class="jumbotron">
+            <h1 class="display-4">{{ article.title }}</h1>
+            <p class="lead">{{ article.content }}</p>
+            <hr class="my-4">
+            <ul class="list-inline list-unstyled">
+                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ article.date }}</span></li>
+                <li>|</li>
+                <span><i class="glyphicon glyphicon-comment"></i> 2 commentaires</span>
+            </ul>
+            <div class="row bootstrap snippets">
+                <div class="col-md-6 col-md-offset-2 col-sm-12">
+                    <div class="comment-wrapper">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Commentaires
+                            </div>
+                            <div class="panel-body">
+                                {{ form_start(form, {'method': 'post', 'action': path('comment_new')}) }}
+
+
+                                {{ form_widget(form) }}
+                                <div class="row">
+                                    <div class="col-xs-12 boutons_bas">
+                                        <br>
+                                        <button class="btn btn-info pull-right" type="submit" value="Create">Envoyer</button>
+                                        <div class="clearfix"></div>
+                                        <hr>
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+
+
+                                {% for comment in comments %}
+                                    <strong class="text-success">@{{ comment.user }}</strong>
+                                    <span class="text-muted pull-right">
+                                    <small class="text-muted">{{ comment.date }}</small>
+                                    </span>
+                                    <p>{{ comment.content }}</p>
+                                {% endfor %}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    {% endfor %}
+{% endblock body %}
 
 
 {% block footer %}

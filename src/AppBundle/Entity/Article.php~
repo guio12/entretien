@@ -36,6 +36,13 @@ class Article
     private $content;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="date", type="string", nullable=false)
+     */
+    private $date;
+
+    /**
      * @var string
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="article")
@@ -130,5 +137,53 @@ class Article
     public function removeComment(\AppBundle\Entity\Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Article
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Article
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

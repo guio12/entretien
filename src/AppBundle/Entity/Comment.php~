@@ -45,6 +45,13 @@ class Comment
      */
     private $article;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="date", type="string", nullable=false)
+     */
+    private $date;
+
 
     /**
      * Get id
@@ -126,5 +133,29 @@ class Comment
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Set date
+     *
+     * @param string $date
+     *
+     * @return Comment
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }
