@@ -40,7 +40,7 @@ header {
 .btn-style {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
-  background-color: #0ba2a3;;
+  background-color: steelblue;
   color: black;
   font-size:20px;
   text-transform: uppercase;
@@ -52,4 +52,23 @@ header {
 .message_flash {
   color: white;
   font-size: 2em;
+}
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  line-height: 60px; /* Vertically center the text there */
+
 }

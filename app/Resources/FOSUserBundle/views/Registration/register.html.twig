@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {%  block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('build/inscription.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/inscription.css') }}">
 {%  endblock stylesheets %}
 
 {% block content %}{% endblock content %}
@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-lg-12">
                     <div class="col-lg-12">
-                        <h2 class="text-center">Formulaire d'inscription</h2>
+                        <h2 class="text-center titre">Formulaire d'inscription</h2>
                         <div class="col-lg-12 text-center">
                             <div class="form-group input-lg col-lg-12">
                                 <div class="row">
-                                {{ form_label(form.email) }}
+                                {{ form_label(form.email, null, {'label': 'Adresse email'}) }}
                                 </div>
                                 <div class="row">
                                     <div class="row erreurs text-center">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-group input-lg col-lg-12">
                                 <div class="row">
-                                    {{ form_label(form.username) }}
+                                    {{ form_label(form.username, null, {'label': "Nom d'utilisateur"}) }}
                                 </div>
                                 <div class="row erreurs text-center">
                                     {{ form_errors(form.username) }}
@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group input-lg col-lg-12">
                                 <div class="row">
-                                    {{ form_label(form.plainPassword.first) }}
+                                    {{ form_label(form.plainPassword.first, null, {'label': 'Mot de passe'}) }}
                                 </div>
                                 <div class="row erreurs text-center">
                                     {{ form_errors(form.plainPassword.first) }}
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group input-lg col-lg-12">
                                 <div class="row">
-                                    {{ form_label(form.plainPassword.second) }}
+                                    {{ form_label(form.plainPassword.second, null, {'label': 'Confirmer le mot de passe'}) }}
                                 </div>
                                 <div class="row erreurs text-center">
                                     {{ form_errors(form.plainPassword.second) }}

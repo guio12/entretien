@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 
-    {% block stylesheets %}<link rel="stylesheet" href="{{ asset('/css/accueil.css') }}">
+    {% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Font Awesome -->
@@ -9,7 +9,12 @@
         <!-- Bootstrap core CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">{% endblock stylesheets %}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+        <script src="{{ asset('js/comments.js') }}"></script>
+    {% endblock stylesheets %}
 
 
 
@@ -20,27 +25,13 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto ">
-                <li class="nav-item active text-white">
-                    <a class="nav-link text-white" href="{{ path('homepage') }}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="">Add a recipe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="">View all recipes</a>
-                </li>
-            </ul>
-
             {% if is_granted("ROLE_USER") %}
-                <div class="col-xs-3 text-right">
+                <div class="col-xs-3 offset-lg-9 text-right">
                     <a href="{{ path('fos_user_security_logout') }}"
                        class="btn btn-style text-white">{{ 'Se déconnecter'|trans({}, 'FOSUserBundle') }}</a>
                 </div>
             {% else %}
-                <div class="col-xs-3 text-right">
+                <div class="col-xs-3 offset-lg-9 text-right">
                     <a href="{{ path('fos_user_registration_register') }}"
                        class="btn btn-style text-white">{{ "S'enregistrer"|trans({}, 'FOSUserBundle') }}</a>
                 </div>
@@ -49,49 +40,50 @@
                        class="btn btn-style text-white">{{ 'Se connecter'|trans({}, 'FOSUserBundle') }}</a>
                 </div>
             {% endif %}
-        </div>
     </nav>
 {% endblock header %}
 
 
 
 {% block body %}
-    <h2 class="text-center">Actualités</h2>
     {% for article in articles %}
         <div class="jumbotron">
             <h1 class="display-4">{{ article.title }}</h1>
             <p class="lead">{{ article.content }}</p>
             <hr class="my-4">
             <ul class="list-inline list-unstyled">
-                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ article.date }}</span></li>
+                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ article.date }} {#{{ dump(form.article) }}#}</span></li>
                 <li>|</li>
-                <span><i class="glyphicon glyphicon-comment"></i> 2 commentaires</span>
+                <button class="button_comments"><span><i class="glyphicon glyphicon-comment"></i> {{ nb }} commentaires</span></button>
             </ul>
-            <div class="row bootstrap snippets">
-                <div class="col-md-6 col-md-offset-2 col-sm-12">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 col-sm-12 comments_hide">
                     <div class="comment-wrapper">
-                        <div class="panel panel-info">
+                        <div class="panel panel-info panel-comments">
                             <div class="panel-heading">
                                 Commentaires
                             </div>
                             <div class="panel-body">
                                 {{ form_start(form, {'method': 'post', 'action': path('comment_new')}) }}
-
-
-                                {{ form_widget(form) }}
+                                {{ form_widget(form.content) }}
+                                {{ form_widget(form.article) }}
                                 <div class="row">
-                                    <div class="col-xs-12 boutons_bas">
+                                    <div class="col-xs-12">
                                         <br>
-                                        <button class="btn btn-info pull-right" type="submit" value="Create">Envoyer</button>
+                                        {% if is_granted("ROLE_USER") %}
+                                        <button class="btn btn-send pull-right" type="submit" value="Create">Envoyer</button>
+                                        {% else %}
+                                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-send pull-right">Envoyer</a>
+                                            {% endif %}
                                         <div class="clearfix"></div>
                                         <hr>
                                         {{ form_end(form) }}
+
                                     </div>
                                 </div>
 
-
                                 {% for comment in comments %}
-                                    <strong class="text-success">@{{ comment.user }}</strong>
+                                    <strong class="username">@{{ comment.user }}</strong>
                                     <span class="text-muted pull-right">
                                     <small class="text-muted">{{ comment.date }}</small>
                                     </span>
@@ -123,7 +115,7 @@
 
                     <!-- Content -->
                     <h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis, maxime quam recusandae harum esse fugiat. Itaque, culpa?</p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis</p>
 
                 </div>
                 <!-- Grid column -->
@@ -135,7 +127,7 @@
 
                     <!-- Content -->
                     <h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id excepturi hic.</p>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam</p>
 
                 </div>
                 <!-- Grid column -->
@@ -160,6 +152,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 {% endblock %}
 
 

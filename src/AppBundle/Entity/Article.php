@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,7 @@ class Article
      * @var string
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="article")
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
      */
     private $comments;
 
@@ -88,8 +90,9 @@ class Article
      */
     public function __construct()
     {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->comments = new ArrayCollection();
     }
+
 
     /**
      * Set content
@@ -125,7 +128,7 @@ class Article
     public function addComment(\AppBundle\Entity\Comment $comment)
     {
         $this->comments[] = $comment;
-
+        //$comment->setArticle($this);
         return $this;
     }
 

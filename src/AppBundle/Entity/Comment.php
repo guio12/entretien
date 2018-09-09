@@ -37,8 +37,15 @@ class Comment
      */
     private $user;
 
+
+    public function __toString()
+    {
+        return $this->article;
+    }
+
+
     /**
-     * @var int
+     * @var string
      *
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
      * @ORM\JoinColumn(name="article_id", referencedColumnName="id")

@@ -16,18 +16,10 @@
             {% if csrf_token('authenticate') %}
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             {% endif %}
-
-
             <section class="global">
-
-
                 <div class="container">
                     <div class="row">
                         <div class="card border-none">
-                            <div class="col-xs-12 text-center">
-                                <img src="{{ asset('build/images/logo_connexion.e64dc830.png') }}"
-                                     alt="logo_connexion" class="brand-logo"/>
-                            </div>
                             <div class="col-md-offset-3 col-md-6 col-xs-12">
                                 <div class="form-group erreurs input-sm">
                                     {% if error %}
@@ -45,16 +37,12 @@
                                     <label for="password">{{ ''|trans }}</label>
                                     <input class="form-control input-lg" type="password" id="password"
                                            name="_password" placeholder="Mot de passe" required="required"/>
-                                    <div>
-
-                                        <div class="checkbox col-md-offset-3 col-md-8 col-sm-offset-4 col-sm-8">
-                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                                            <label for="remember_me">{{ 'Se souvenir de moi'|trans }}</label>
-                                        </div>
-
+                                    <div class="form-group input-lg">
                                         <button type="submit" class="btn-style btn btn-block input-lg" id="_submit"
                                                 name="_submit" value="{{ 'Connexion'|trans }}">Connexion
                                         </button>
+                                        <a href="{{ path('fos_user_registration_register') }}" class="btn-style btn btn-block input-lg" id="_submit" value="{{ "S'enregistrer"|trans }}">S'enregistrer
+                                        </a>
                                     </div>
                                 </div>
                             </div>

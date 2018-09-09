@@ -1,0 +1,22 @@
+input {
+    color: black;
+    border-radius: 10px;
+    width: 60%;
+}
+
+.titre {
+    font-size: 6rem;
+    color: white;
+}
+
+label {
+    color: lightgrey;
+    font-size: 3.5vh;
+}
+
+.form-group {
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+    padding-bottom: 6rem;
+}
+

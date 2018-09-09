@@ -2,30 +2,16 @@ body {
   background-image: radial-gradient(circle, #747474, #646464, #545454, #454545, #363636);
 }
 
-.brand-logo {
-  width: 25vh;
-  text-align: center;
-}
-
-
-@media only screen and (max-width: 1024px) {
-  .img {
-    padding-left: 0;
-  }
-}
-
-.checkbox {
-  color: white;
+a href {
+  padding-bottom: 3rem;
 }
 
 .global{
-
   text-transform: uppercase;
   background-size: cover;
   background-position: center center;
   min-height: 100%;
   min-width: 100%;
-
 }
 .global:after{
   position: absolute;
@@ -36,39 +22,16 @@ body {
   left: 0;
   top: 0;
   content: "";
-
 }
+
 .global .container{
   z-index: 3;
   position: relative;
 }
-.global .card{
-  background: transparent;
-}
-a, a:hover{
-  color: #fff;
-  text-decoration: underline;
-}
-@media (min-width:576px){
-  section{
-    padding: 40px 0px;
-  }
-  .hero .card .card-block{
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-}
-@media (max-width:576px){
-  section{
-    padding: 20px;
-  }
-}
-.bg-alt {
-  background-color: white;
-}
 
 .form-group input {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .form-control{
@@ -79,15 +42,12 @@ a, a:hover{
   color: #FFFFFF;
   padding-bottom: 3rem;
 }
+
 .form-control:focus {
   border-color: #FFFFFF;
   background-color: lightgrey;
   color: black;
 }
 
-
-.erreurs {
-  color: white;
-}
 
 

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class DefaultController extends Controller
 {
     /**
@@ -20,17 +21,22 @@ class DefaultController extends Controller
         $articles = $em->getRepository('AppBundle:Article')->findAll();
         $comments = $em->getRepository('AppBundle:Comment')->findAll();
 
+        $commentRepo = $em->getRepository('AppBundle:Comment');
+        $nb = $commentRepo->getNb();
+
+
         $userId = $this->getUser() ? $this->getUser()->getId() : null;
-        $username = $this->getUser() ? $this->getUser()->getUsername() : null;
+
         $comment = new Comment();
         $comment->setUser($userId);
+
 
         $form = $this->createForm('AppBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR, 'articles' => $articles, 'comments' => $comments, 'username' => $username, 'form' => $form->createView()
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR, 'articles' => $articles, 'comments' => $comments, 'nb' => $nb, 'form' => $form->createView()
         ));
     }
 
@@ -40,14 +46,24 @@ class DefaultController extends Controller
     public function newComment(Request $request)
     {
 
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository('AppBundle:Article')->findAll();
+
+
+        $comments = $em->getRepository('AppBundle:Comment')->findAll();
 
         $userId = $this->getUser() ? $this->getUser()->getId() : null;
 
         $em = $this->getDoctrine()->getManager();
         $id_user = $em->getRepository('AppBundle:User')->find($userId);
+
         $comment = new Comment();
+
         $comment->setUser($id_user);
         $comment->setDate(strftime('%c'));
+
+
+
 
         $form = $this->createForm('AppBundle\Form\CommentType', $comment);
         $form->handleRequest($request);
@@ -58,10 +74,12 @@ class DefaultController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('homepage', array('id' => $comment->getId()));
+            return $this->redirectToRoute('homepage');
         }
         return $this->render('default/index.html.twig', array(
+
             'articles' => $articles,
+            'comments' => $comments,
             'form' => $form->createView()));
     }
 }
